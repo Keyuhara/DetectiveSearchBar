@@ -1,0 +1,110 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    box-sizing: border-box;
+}
+body{
+    background: #2b2a33;
+}
+button{
+    background: transparent;
+    border: 0;
+    color: #fbfbfe;
+    cursor: pointer;
+    font-size: 30px;
+    outline: 0;
+}
+input{
+    background: transparent;
+    border: 0;
+    color: #a6a5ad;
+    flex: 1;
+    font-size: 20px;
+    height: 50px;
+    outline: 0;
+}
+.clear{ 
+    padding: 0 0 0 0;
+}
+.chatbox {
+    background: #42414d;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    justify-content: center;
+    margin: 50px auto 0;
+    width: 500px;
+}
+.counter {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0 0 0;
+    font-size: 16px;
+    color: #a6a5ad;
+}
+.enter {
+    padding: 0 10px 0 0;
+}
+.messages {
+    display: flex;
+    flex-direction: column-reverse;
+    margin-top: auto;
+    overflow-y: auto;
+    padding: 0 20px 10px;
+}
+.messagesItem {
+    margin-top: 10px;
+    max-width: 70%;
+    padding: 8px 12px;
+    width: fit-content;
+}
+.messagesOperator {
+    background: #49008a;
+    color: #fbfbfe;
+    margin-left: auto;
+    border-bottom-left-radius: 20px;
+}
+.messagesVisitor {
+    background: #31303a;
+    color: #fbfbfe;
+    margin-right: auto;
+    border-bottom-right-radius: 20px;
+}
+.messagesOperator,
+.messagesVisitor {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+.results{
+    max-height: 260px;
+    overflow-y: hidden;
+}
+.results li{
+    border-radius: 3px;
+    color: #a6a5ad;
+    cursor: pointer;
+    list-style: none;
+    padding: 15px 10px;
+}
+.results li:hover{
+    background: #61606b;
+}
+.results ul{
+    border-top: 1px solid #2b2a33;
+    padding: 15px 10px;
+}
+.row{
+    align-items: center;
+    display: flex;
+    padding: 10px 20px;
+}
+.searchbar{
+    background: #42414d;
+    border-radius: 5px;
+    margin: 10px auto 0;
+    width: 500px;
+}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="styles.css">
+        <meta name="description" content="https://www.youtube.com/watch?v=pdyFf1ugVfk">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Search Bar</title>
+    </head>
+    <body>
+        <div class="chatbox">
+            <div class="messages">
+                <div></div>
+            </div>
+        </div>
+        <span class="counter">0 / 30</span>
+        <div class="searchbar">
+            <div class="row">
+                <button class="enter">➤</button>
+                <input type="text" id="input" placeholder="Type your question" autocomplete="off" maxlength="30">
+                <button class="clear">☒</button>
+            </div>
+            <div class="results">
+            </div>
+        </div>
+        <script src="click.js"></script>
+        <script src="chatbox.js"></script>
+        <script src="questions.js"></script>
+        <script type="module" src="autocomplete.mjs" async defer></script>
+    </body>
+</html>
