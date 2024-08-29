@@ -1,3 +1,5 @@
+import getServerlessResponse from './autocomplete.mjs';
+
 class Chatbox {
     constructor() {
         this.args = {
@@ -28,6 +30,21 @@ class Chatbox {
             return;
         }
 
+        // Start spinner
+        const spinner = document.querySelector(".spinner");
+        spinner.style.display = "flex";
+
+        // Reset input immediately after submitting
+        inputBox.value = '';
+        const counter = document.querySelector(".counter");
+        const maxLength = input.getAttribute('maxlength');
+        const currentLength = inputBox.value.length;
+        counter.textContent = `${currentLength} / ${maxLength}`;
+        const resultsBox = document.querySelector(".results");
+        if(!inputBox.length){
+            resultsBox.innerHTML = '';
+        }
+
         let msg1 = { name: "User", message: text1 }
         this.messages.push(msg1);
 
@@ -44,20 +61,14 @@ class Chatbox {
             let msg2 = { name: "Sam", message: r.answer };
             this.messages.push(msg2);
             this.updateChatText(chatbox);
-            inputBox.value = '';
-            const counter = document.querySelector(".counter");
-            const maxLength = input.getAttribute('maxlength');
-            const currentLength = inputBox.value.length;
-            counter.textContent = `${currentLength} / ${maxLength}`;
-            const resultsBox = document.querySelector(".results");
-            if(!inputBox.length){
-                resultsBox.innerHTML = '';
-            }
-        }).catch((error) => {
+            spinner.style.display = "none";
+        }).catch((error) => { // if app.py is not running
+            let msg2 = { name: "Sam", message: getServerlessResponse(text1) };
+            this.messages.push(msg2);
             console.error('Error:', error);
             this.updateChatText(chatbox);
-            inputBox.value = '';
-          });
+            spinner.style.display = "none";
+        });
     }
 
     updateChatText(chatbox) {

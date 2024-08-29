@@ -2,13 +2,16 @@ import Fuse from 'https://cdn.jsdelivr.net/npm/fuse.js@6.5.3/dist/fuse.esm.js';
 
 let q;
 let fuse;
+let m;
+let muse;
 
 const options = {
     isCaseSensitive: false,
     includeScore: true,
     ignoreLocation: true,
     shouldSort: true,
-    threshold: 0.9,
+    threshold: 0.3,
+    keys: ["pattern"]
 };
 
 fetch('intents.json')
@@ -22,6 +25,8 @@ fetch('intents.json')
         q = collect(data);
         // console.log(q);
         fuse = new Fuse(q, options);
+
+        m = map(data);
     })
     .catch(error => {
         console.error('Error with fetch operation:', error);
@@ -47,6 +52,58 @@ function collect(data) {
     }
 
     return patterns.sort();  // Return the collected patterns
+}
+
+// Create a map storing patterns/questions and responses/answers
+function map(data) {
+    if (!data.intents) {
+        console.error('Invalid data format:', data);
+        return new Map();
+    }
+    if (!Array.isArray(data.intents)) {
+        console.error('Invalid data format:', data);
+        return new Map();
+    }
+
+    // Create a data structure to store intents
+    const dataMap = new Map();
+    
+    // Populate the dataMap with patterns and responses
+    data.intents.forEach(intent => {
+        dataMap.set(intent.tag, {
+            patterns: intent.patterns,
+            responses: intent.responses
+        });
+    });
+
+    return new Map([...dataMap.entries()].sort());
+}
+
+// Search for best matched question and return associated response randomly
+export default function getServerlessResponse(userInput) {
+    let bestMatch = null;
+    let bestScore = Infinity;
+  
+    // Iterate through each intent in the datamap
+    for (const [intent, data] of m.entries()) {
+        const { patterns, responses } = data;
+  
+        // Prepare the patterns for Fuse.js
+        muse = new Fuse(patterns.map(pattern => ({ pattern })), options);
+    
+        // Fuse.js search
+        const result = muse.search(userInput);
+  
+        if (result.length > 0 && result[0].score < bestScore) {
+            bestScore = result[0].score;
+            bestMatch = {
+                intent,
+                response: responses[Math.floor(Math.random() * responses.length)]
+            };
+        }
+    }
+  
+    return bestMatch ? bestMatch.response : "Sorry, I do not understand...";
 }
 
 const resultsBox = document.querySelector(".results");
